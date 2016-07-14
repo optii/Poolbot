@@ -18,7 +18,7 @@ use PhpSlackBot\Bot;
 
 $bot = new Bot();
 $pool = Pool::create();
-$bot->setToken('xoxb-58283429041-qTnKuI5miYeC10iH4nowcqa7'); // Get your token here https://my.slack.com/services/new/bot
+$bot->setToken('xoxb-5azef6546429041-qTnojioijieCpokpopkqa7'); // Get your token here https://my.slack.com/services/new/bot
 $bot->loadCommand(new RegisterCommand($pool));
 $bot->loadCommand(new LeaderboardCommand($pool));
 $bot->loadCommand(new ChallengeCommand($pool));
