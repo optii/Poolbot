@@ -1,10 +1,8 @@
 <?php
 
-abstract class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand{
-
+abstract class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand
+{
   protected $pool;
-  abstract protected function configure();
-  abstract protected function execute($message, $context);
 
   public function __construct(Pool $pool)
   {

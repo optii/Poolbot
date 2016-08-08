@@ -7,7 +7,7 @@
  */
 require(dirname(__FILE__).'/PoolbotBaseCommand.php');
 
- class SeasonCommand extends PoolbotBaseCommand
+class SeasonCommand extends PoolbotBaseCommand
 {
     protected function configure() {
         $this->setName('season');

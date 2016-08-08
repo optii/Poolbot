@@ -1,20 +1,20 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/Classes/RegisterCommand.php';
-require __DIR__ . '/Classes/AcceptCommand.php';
-require __DIR__ . '/Classes/LeaderboardCommand.php';
-require __DIR__ . '/Classes/LostCommand.php';
-require __DIR__ . '/Classes/CancelCommand.php';
-require __DIR__ . '/Classes/ChallengeCommand.php';
-require __DIR__ . '/Classes/AddAdminCommand.php';
-require __DIR__ . '/Classes/SeasonCommand.php';
-require __DIR__ . '/Classes/PreviousSeasonLeaderboardCommand.php';
-require __DIR__ . '/Classes/HelpCommand.php';
-require __DIR__ . '/Classes/MatchesCommand.php';
-require __DIR__ . '/Classes/GifCommand.php';
-require __DIR__ . '/Classes/PoolbotBaseCommand.php';
-require __DIR__ . '/Classes/Pool.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/Classes/RegisterCommand.php';
+require_once __DIR__ . '/Classes/AcceptCommand.php';
+require_once __DIR__ . '/Classes/LeaderboardCommand.php';
+require_once __DIR__ . '/Classes/LostCommand.php';
+require_once __DIR__ . '/Classes/CancelCommand.php';
+require_once __DIR__ . '/Classes/ChallengeCommand.php';
+require_once __DIR__ . '/Classes/AddAdminCommand.php';
+require_once __DIR__ . '/Classes/SeasonCommand.php';
+require_once __DIR__ . '/Classes/PreviousSeasonLeaderboardCommand.php';
+require_once __DIR__ . '/Classes/HelpCommand.php';
+require_once __DIR__ . '/Classes/MatchesCommand.php';
+require_once __DIR__ . '/Classes/GifCommand.php';
+require_once __DIR__ . '/Classes/PoolbotBaseCommand.php';
+require_once __DIR__ . '/Classes/Pool.php';
 
 use PhpSlackBot\Bot;
 
