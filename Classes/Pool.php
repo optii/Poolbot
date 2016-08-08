@@ -19,6 +19,7 @@ class Pool
     private $leaderboard = array();
     private $admins = array();
     private $password;
+    private $gif = false;
 
     public function __construct()
     {
@@ -196,6 +197,20 @@ class Pool
                 }
             }
         }
+    }
+
+    public function toggleGif(){
+      $this->gif = !$this->gif;
+      return $this;
+    }
+
+    public function isGif(){
+      return $this->gif;
+    }
+
+    public function setGif($gif){
+      $this->gif = $gif;
+      return $this;
     }
 
     public function generatePassword(){

@@ -5,15 +5,8 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-class LeaderboardCommand extends \PhpSlackBot\Command\BaseCommand
+class LeaderboardCommand extends PoolbotBaseCommand
 {
-    private $pool;
-
-    public function __construct(Pool $pool)
-    {
-        $this->pool = $pool;
-    }
-
     protected function configure() {
         $this->setName('leaderboard');
     }

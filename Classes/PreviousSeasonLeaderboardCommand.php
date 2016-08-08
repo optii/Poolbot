@@ -5,15 +5,8 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-class PreviousSeasonLeaderboardCommand extends \PhpSlackBot\Command\BaseCommand
+class PreviousSeasonLeaderboardCommand extends PoolbotBaseCommand
 {
-    private $pool;
-
-    public function __construct(Pool $pool)
-    {
-        $this->pool = $pool;
-    }
-
     protected function configure() {
         $this->setName('previous');
     }

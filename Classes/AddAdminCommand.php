@@ -5,15 +5,8 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-class AddAdminCommand extends \PhpSlackBot\Command\BaseCommand
+class AddAdminCommand extends PoolbotBaseCommand
 {
-    private $pool;
-
-    public function __construct(Pool $pool)
-    {
-        $this->pool = $pool;
-    }
-
     protected function configure() {
         $this->setName('admin');
     }
