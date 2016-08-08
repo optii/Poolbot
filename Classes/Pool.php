@@ -174,7 +174,6 @@ class Pool
                     $this->matchs[$k]['winner'] = $v['user1'];
                     $this->leaderboard[$this->current][$v['user1']] += self::POINT_WIN;
                     $this->leaderboard[$this->current][$v['user2']] += self::POINT_LOST;
-                    var_dump($this->leaderboard);
                     return true;
                 }
 
@@ -183,7 +182,6 @@ class Pool
                     $this->matchs[$k]['winner'] = $v['user2'];
                     $this->leaderboard[$this->current][$v['user2']] += self::POINT_WIN;
                     $this->leaderboard[$this->current][$v['user1']] += self::POINT_LOST;
-                    var_dump($this->leaderboard);
                     return true;
                 }
             }
