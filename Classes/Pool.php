@@ -9,7 +9,7 @@
 class Pool
 {
     const POINT_WIN = 3;
-    const POINT_LOST = 0;
+    const POINT_LOST = -3;
     const SAVE_PATH = __DIR__.'\\..\\save\\pool.save';
 
     private $seasons = array();
@@ -59,6 +59,7 @@ class Pool
         $leaderboardText = "";
         if(array_key_exists($this->getCurrent(), $this->leaderboard)){
             asort($this->leaderboard[$season], SORT_NUMERIC);
+            $this->leaderboard[$season] = array_reverse($this->leaderboard[$season]);
             $i = 1;
             foreach($this->leaderboard[$season] as $k => $v){
                 $leaderboardText .= $i.". <@".$k."> - ".$v."pts\n";
