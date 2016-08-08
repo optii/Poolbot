@@ -5,7 +5,9 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-class SeasonCommand extends PoolbotBaseCommand
+require(dirname(__FILE__).'/PoolbotBaseCommand.php');
+
+ class SeasonCommand extends PoolbotBaseCommand
 {
     protected function configure() {
         $this->setName('season');
