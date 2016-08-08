@@ -15,7 +15,7 @@ class AddAdminCommand extends PoolbotBaseCommand
        if($this->pool->isRegistered($this->getCurrentUser())){
            $res = $this->pool->addAdmin($this->getCurrentUser(), $this->parseCommand($message));
            if($res === true){
-               $this->send($this->getCurrentChannel(), null, 'You are now an admin');
+               $this->send($this->getCurrentChannel(), null, 'You are now an admin', 'power');
            } else {
                $this->send($this->getCurrentChannel(), null, $res);
            }

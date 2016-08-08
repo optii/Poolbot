@@ -12,7 +12,7 @@ class LeaderboardCommand extends PoolbotBaseCommand
     }
 
     protected function execute($message, $context) {
-        $this->send($this->getCurrentChannel(), null, $this->pool->getLeaderboard());
+        $this->send($this->getCurrentChannel(), null, $this->pool->getLeaderboard(), "leader");
     }
 
 }

@@ -14,7 +14,7 @@ class AcceptCommand extends PoolbotBaseCommand
     protected function execute($message, $context) {
         if($this->pool->isRegistered($this->getCurrentUser())){
             if($this->pool->accept($this->getCurrentUser())){
-                $this->send($this->getCurrentChannel(), null, 'You have accepted the challenge');
+                $this->send($this->getCurrentChannel(), null, 'You have accepted the challenge', 'accepted');
             } else {
                 $this->send($this->getCurrentChannel(), null, 'You have no challenges to accept');
             }

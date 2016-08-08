@@ -1,5 +1,7 @@
 <?php
 
+use \rfreebern\Giphy;
+
 abstract class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand
 {
   protected $pool;

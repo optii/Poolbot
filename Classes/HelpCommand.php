@@ -21,6 +21,8 @@ class HelpCommand extends \PhpSlackBot\Command\BaseCommand
        *lost*: Records a defeat, automatically accepts the challenge if not previously accepted\n
        *leaderboard*: Shows the leaderboard for the current season\n
        *previous _number_*: Shows the leaderboard for the given season\n
+       *matches*: lists all on-going matches\n
+       *gif*: Toggles the GIF mode of the bot, requires admin\n
        *admin _password_*: Registers the user as an admin, requires the password\n
        *season*: Starts a new season, user must be admin\n");
     }
