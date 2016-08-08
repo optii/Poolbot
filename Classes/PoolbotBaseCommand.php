@@ -1,6 +1,6 @@
 <?php
 
-class PoolbotBaseCommand.php extends \PhpSlackBot\Command\BaseCommand{
+class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand{
 
   protected $pool;
 
