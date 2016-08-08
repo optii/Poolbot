@@ -16,7 +16,7 @@ class ChallengeCommand extends PoolbotBaseCommand
         if($user2 = $t){
             $res = $this->pool->challenge($this->getCurrentUser(), $user2);
             if($res === true){
-                $this->send($this->getCurrentChannel(), null, '<@'.$this->getCurrentUser().'> has challenged <@'.$user2.'> to a match', 'challange');
+                $this->send($this->getCurrentChannel(), null, '<@'.$this->getCurrentUser().'> has challenged <@'.$user2.'> to a match', 'challenge');
             } else {
                 $this->send($this->getCurrentChannel(), null, $res);
             }
