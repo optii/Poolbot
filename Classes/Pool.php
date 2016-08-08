@@ -74,7 +74,7 @@ class Pool
       foreach($this->matchs as $k => $v){
         if($v['season'] == $this->current){
             if($v['accepted'] == false || $v['winner'] == null){
-                $matches .= "<@".$v['user1'].'> vs <@'.$v['user2'].'> - '.((!$v['accepted']) ? "Not accepted" : "Pending result")
+                $matches .= "<@".$v['user1'].'> vs <@'.$v['user2'].'> - '.((!$v['accepted']) ? "Not accepted" : "Pending result");
             }
         }
       }
