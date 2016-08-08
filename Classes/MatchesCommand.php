@@ -5,8 +5,6 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-require_once(dirname(__FILE__).'/PoolbotBaseCommand.php');
-
 class MatchesCommand extends PoolbotBaseCommand
 {
     protected function configure() {

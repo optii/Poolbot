@@ -5,8 +5,6 @@
  * Date: 09/07/2016
  * Time: 13:07
  */
-require(dirname(__FILE__).'/PoolbotBaseCommand.php');
-
 class SeasonCommand extends PoolbotBaseCommand
 {
     protected function configure() {

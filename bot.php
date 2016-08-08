@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/Classes/PoolbotBaseCommand.php';
 require_once __DIR__ . '/Classes/RegisterCommand.php';
 require_once __DIR__ . '/Classes/AcceptCommand.php';
 require_once __DIR__ . '/Classes/LeaderboardCommand.php';
@@ -13,7 +14,6 @@ require_once __DIR__ . '/Classes/PreviousSeasonLeaderboardCommand.php';
 require_once __DIR__ . '/Classes/HelpCommand.php';
 require_once __DIR__ . '/Classes/MatchesCommand.php';
 require_once __DIR__ . '/Classes/GifCommand.php';
-require_once __DIR__ . '/Classes/PoolbotBaseCommand.php';
 require_once __DIR__ . '/Classes/Pool.php';
 
 use PhpSlackBot\Bot;
