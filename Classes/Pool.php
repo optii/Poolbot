@@ -72,18 +72,12 @@ class Pool
 
     public function getCurrentMatches(){
       $matches = "Current matches:\n";
-      $ongoingMatches = false;
       foreach($this->matchs as $k => $v){
         if($v['season'] == $this->current){
             if($v['accepted'] == false || $v['winner'] == null){
-                $ongoingMatches = true;
-                $matches .= "<@".$v['user1']."> vs <@".$v['user2']."> - ".((!$v['accepted']) ? "Not accepted" : "Pending result")."\n";
+                $matches .= "<@".$v['user1'].'> vs <@'.$v['user2'].'> - '.((!$v['accepted']) ? "Not accepted" : "Pending result");
             }
         }
-      }
-
-      if(!$ongoingMatches){
-          return "No matches";
       }
 
       return $matches;
