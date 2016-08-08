@@ -19,7 +19,9 @@ class ChallengeCommand extends \PhpSlackBot\Command\BaseCommand
     }
 
     protected function execute($message, $context) {
-        if($user2 = $this->parseCommand($message)){
+      $t = $this->parseCommand($message);
+      var_dump($t);
+        if($user2 = $t){
             $res = $this->pool->challenge($this->getCurrentUser(), $user2);
             if($res === true){
                 $this->send($this->getCurrentChannel(), null, '<@'.$this->getCurrentUser().'> has challenged <@'.$user2.'> to a match');
