@@ -13,7 +13,8 @@ class GifCommand extends PoolbotBaseCommand
 
     protected function execute($message, $context) {
         if($this->pool->isRegistered($this->getCurrentUser()) && $this->pool->isAdmin($this->getCurrentUser())){
-          $gif = $this->pool->toggleGif();
+          $this->pool->toggleGif();
+          $this->send($this->getCurrentChannel(), null, ($this->pool->isGif()) ? "Gif mode activated" : "Gif mode deactivated")
         } else {
             $this->send($this->getCurrentChannel(), null, 'You must be an admin');
         }
