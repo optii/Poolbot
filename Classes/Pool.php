@@ -10,7 +10,7 @@ class Pool
 {
     const POINT_WIN = 3;
     const POINT_LOST = -3;
-    const SAVE_PATH = __DIR__.'\\..\\save\\pool.save';
+    const SAVE_PATH = __DIR__ . '\\..\\save\\pool.save';
 
     private $seasons = array();
     private $current;
@@ -53,34 +53,39 @@ class Pool
 
     public function getLeaderboard($season = false)
     {
-        if(!$season){
+        if (!$season) {
             $season = $this->current;
         }
 
         $leaderboardText = "";
-        if(array_key_exists($this->getCurrent(), $this->leaderboard)){
+        if (array_key_exists($this->getCurrent(), $this->leaderboard)) {
             asort($this->leaderboard[$season], SORT_NUMERIC);
             $this->leaderboard[$season] = array_reverse($this->leaderboard[$season]);
             $i = 1;
-            foreach($this->leaderboard[$season] as $k => $v){
-                $leaderboardText .= $i.". <@".$k."> - ".$v."pts\n";
+            foreach ($this->leaderboard[$season] as $k => $v) {
+                $leaderboardText .= $i . ". <@" . $k . "> - " . $v . "pts\n";
                 $i++;
             }
         }
         return $leaderboardText;
     }
 
-    public function getCurrentMatches(){
-      $matches = "Current matches:\n";
-      foreach($this->matchs as $k => $v){
-        if($v['season'] == $this->current){
-            if($v['accepted'] == false || $v['winner'] == null){
-                $matches .= "<@".$v['user1'].'> vs <@'.$v['user2'].'> - '.((!$v['accepted']) ? "Not accepted" : "Pending result");
+    public function getCurrentMatches()
+    {
+        $matches = "Current matches:\n";
+        $ongoingMatches = false;
+        foreach ($this->matchs as $k => $v) {
+            if ($v['season'] == $this->current) {
+                if ($v['accepted'] == false || $v['winner'] == null) {
+                    $ongoingMatches = true;
+                    $matches .= "<@" . $v['user1'] . "> vs <@" . $v['user2'] . "> - " . ((!$v['accepted']) ? "Not accepted" : "Pending result") . "\n";
+                }
             }
         }
-      }
-
-      return $matches;
+        if (!$ongoingMatches) {
+            return "No matches";
+        }
+        return $matches;
     }
 
     public function hasChallenge($user)
@@ -129,7 +134,7 @@ class Pool
             return true;
         }
 
-        if($chal1){
+        if ($chal1) {
             return 'You already have a challenge';
         } else {
             return 'The player you want to challenge already has a challenge';
@@ -160,10 +165,11 @@ class Pool
      * @param $user Id of the user that has lost
      * @return bool True if the loss has been recorded, false otherwise
      */
-    protected function lost($user){
-        foreach($this->matchs as $k => $v){
-            if($v['season'] == $this->current){
-                if($v['user2'] == $user && $v['winner'] === null){
+    protected function lost($user)
+    {
+        foreach ($this->matchs as $k => $v) {
+            if ($v['season'] == $this->current) {
+                if ($v['user2'] == $user && $v['winner'] === null) {
                     $this->matchs[$k]['accepted'] = true;
                     $this->matchs[$k]['winner'] = $v['user1'];
                     $this->leaderboard[$this->current][$v['user1']] += self::POINT_WIN;
@@ -172,7 +178,7 @@ class Pool
                     return true;
                 }
 
-                if($v['user1'] == $user && $v['winner'] === null){
+                if ($v['user1'] == $user && $v['winner'] === null) {
                     $this->matchs[$k]['accepted'] = true;
                     $this->matchs[$k]['winner'] = $v['user2'];
                     $this->leaderboard[$this->current][$v['user2']] += self::POINT_WIN;
@@ -189,61 +195,70 @@ class Pool
      * Cancels a match for the specific user,
      * @param $user The id of the user wanting to cancel
      */
-    protected function cancel($user){
-        foreach($this->matchs as $k => $v){
-            if($v['season'] == $this->getCurrent()){
-                if(($v['user1'] == $user || $v['user2'] == $user) && ($v['accepted'] == false || $v['winner'] == null)){
+    protected function cancel($user)
+    {
+        foreach ($this->matchs as $k => $v) {
+            if ($v['season'] == $this->getCurrent()) {
+                if (($v['user1'] == $user || $v['user2'] == $user) && ($v['accepted'] == false || $v['winner'] == null)) {
                     unset($this->matchs[$k]);
                 }
             }
         }
     }
 
-    public function toggleGif(){
-      $this->gif = !$this->gif;
-      return $this;
+    public function toggleGif()
+    {
+        $this->gif = !$this->gif;
+        return $this;
     }
 
-    public function isGif(){
-      return $this->gif;
+    public function isGif()
+    {
+        return $this->gif;
     }
 
-    public function setGif($gif){
-      $this->gif = $gif;
-      return $this;
+    public function setGif($gif)
+    {
+        $this->gif = $gif;
+        return $this;
     }
 
-    public function generatePassword(){
+    public function generatePassword()
+    {
         $str = "";
-        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
         $max = count($characters) - 1;
         for ($i = 0; $i < 5; $i++) {
             $rand = mt_rand(0, $max);
             $str .= $characters[$rand];
         }
         $this->password = $str;
-        echo "Admin password: ".$str."\n";
+        echo "Admin password: " . $str . "\n";
         return $this;
     }
 
-    public function newSeason(){
+    public function newSeason()
+    {
         $this->current++;
         $this->seasons[] = $this->current;
         $this->save();
         return true;
     }
 
-    public function isAdmin($user){
+    public function isAdmin($user)
+    {
         return in_array($user, $this->admins);
     }
 
-    public function getAdmins(){
+    public function getAdmins()
+    {
         return $this->admins;
     }
 
-    public function addAdmin($user, $password){
-        if($this->password == $password){
-            if(!$this->isAdmin($user)){
+    public function addAdmin($user, $password)
+    {
+        if ($this->password == $password) {
+            if (!$this->isAdmin($user)) {
                 $this->admins[] = $user;
                 $this->save();
                 return true;
@@ -260,13 +275,15 @@ class Pool
         return preg_replace("/<@(.+)>/", "$1", trim($string));
     }
 
-    private function save(){
+    private function save()
+    {
         $serialized = serialize($this);
         file_put_contents(self::SAVE_PATH, $serialized);
     }
 
-    static function create(){
-        if(file_exists(self::SAVE_PATH)){
+    static function create()
+    {
+        if (file_exists(self::SAVE_PATH)) {
             $serialized = file_get_contents(self::SAVE_PATH);
             $object = unserialize($serialized);
             $object->generatePassword();
@@ -276,9 +293,10 @@ class Pool
         }
     }
 
-    public function __call($method,$arguments) {
-        if(method_exists($this, $method)) {
-            $result =  call_user_func_array(array($this,$method),$arguments);
+    public function __call($method, $arguments)
+    {
+        if (method_exists($this, $method)) {
+            $result = call_user_func_array(array($this, $method), $arguments);
             echo 'test save';
             $this->save();
             return $result;
