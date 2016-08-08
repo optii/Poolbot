@@ -9,9 +9,12 @@ require_once(dirname(__FILE__).'/PoolbotBaseCommand.php');
 
 class ChallengeCommand extends PoolbotBaseCommand
 {
+    protected function configure() {
+        $this->setName('challenge');
+    }
+
       protected function execute($message, $context) {
-      $t = $this->parseCommand($message);
-      var_dump($t);
+        $t = $this->parseCommand($message);
         if($user2 = $t){
             $res = $this->pool->challenge($this->getCurrentUser(), $user2);
             if($res === true){
