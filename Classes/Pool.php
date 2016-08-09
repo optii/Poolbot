@@ -192,35 +192,61 @@ class Pool
     /**
      * Cancels a match for the specific user,
      * @param $user The id of the user wanting to cancel
+     * @return True if a match has been cancelled, false otherwise
      */
     protected function cancel($user)
     {
+        $cancelled = false;
         foreach ($this->matchs as $k => $v) {
             if ($v['season'] == $this->getCurrent()) {
                 if (($v['user1'] == $user || $v['user2'] == $user) && ($v['accepted'] == false || $v['winner'] == null)) {
                     unset($this->matchs[$k]);
+                    $cancelled = true;
                 }
             }
         }
+
+        return $cancelled;
     }
 
+    /**
+     * Toggles the GIF system on and off
+     *
+     * @return $this
+     */
     public function toggleGif()
     {
         $this->gif = !$this->gif;
         return $this;
     }
 
+    /**
+     * Is Gif
+     *
+     * @return bool
+     */
     public function isGif()
     {
         return $this->gif;
     }
 
+    /**
+     * Set Gif
+     *
+     * @param $gif
+     * @return $this
+     */
     public function setGif($gif)
     {
         $this->gif = $gif;
         return $this;
     }
 
+    /**
+     * Generates a random string to use as the password
+     *
+     * @return $this
+     */
     public function generatePassword()
     {
         $str = "";
@@ -235,6 +261,11 @@ class Pool
         return $this;
     }
 
+    /**
+     * Creates a new season
+     *
+     * @return bool
+     */
     public function newSeason()
     {
         $this->current++;
@@ -242,6 +273,7 @@ class Pool
         $this->save();
         return true;
     }
+
 
     public function isAdmin($user)
     {
@@ -295,7 +327,6 @@ class Pool
     {
         if (method_exists($this, $method)) {
             $result = call_user_func_array(array($this, $method), $arguments);
-            echo 'test save';
             $this->save();
             return $result;
         }

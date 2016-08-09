@@ -13,8 +13,12 @@ class CancelCommand extends PoolbotBaseCommand
 
     protected function execute($message, $context) {
        if($this->pool->isRegistered($this->getCurrentUser())){
-           $this->pool->cancel($this->getCurrentUser());
-           $this->send($this->getCurrentChannel(), null, 'Match has been cancelled', 'void');
+           if($this->pool->cancel($this->getCurrentUser())){
+               $this->send($this->getCurrentChannel(), null, 'Match has been cancelled', 'void');
+           } else {
+               $this->send($this->getCurrentChannel(), null, 'There is no match to cancel', 'no match');
+           }
+
        } else {
            $this->send($this->getCurrentChannel(), null, 'You are not registered');
        }
