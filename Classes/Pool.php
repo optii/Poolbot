@@ -10,7 +10,8 @@ class Pool
 {
     const POINT_WIN = 3;
     const POINT_LOST = -3;
-    const SAVE_PATH = __DIR__ . '\\..\\save\\pool.save';
+    const SAVE_PATH = __DIR__ . '/../save/';
+    const SAVE_FILENAME = "pool.save";
 
     private $seasons = array();
     private $current;
@@ -127,6 +128,14 @@ class Pool
      */
     protected function challenge($user1, $user2)
     {
+        if(!$this->isRegistered($user2)){
+            return 'The user you are trying to challenge is not registered';
+        }
+
+        if(!$this->isRegistered($user1)){
+            return 'You must be registered to challenge someone';
+        }
+
         $chal1 = $this->hasChallenge($user1);
         $chal2 = $this->hasChallenge($user2);
         if (!$chal1 && !$chal2) {
@@ -191,7 +200,7 @@ class Pool
 
     /**
      * Cancels a match for the specific user,
-     * @param $user The id of the user wanting to cancel
+     * @param $user String id of the user wanting to cancel
      * @return True if a match has been cancelled, false otherwise
      */
     protected function cancel($user)
@@ -307,14 +316,17 @@ class Pool
 
     private function save()
     {
+        if(!is_dir(self::SAVE_PATH)){
+            mkdir(self::SAVE_PATH);
+        }
         $serialized = serialize($this);
-        file_put_contents(self::SAVE_PATH, $serialized);
+        file_put_contents(self::SAVE_PATH.self::SAVE_FILENAME, $serialized);
     }
 
     static function create()
     {
-        if (file_exists(self::SAVE_PATH)) {
-            $serialized = file_get_contents(self::SAVE_PATH);
+        if (file_exists(self::SAVE_PATH.self::SAVE_FILENAME)) {
+            $serialized = file_get_contents(self::SAVE_PATH.self::SAVE_FILENAME);
             $object = unserialize($serialized);
             $object->generatePassword();
             return $object;

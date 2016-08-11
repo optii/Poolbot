@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a5802b790002d7a8516fabac1d0ff5d",
-    "content-hash": "9a2d9244a41e5e9f6b282c3fcd03bfad",
+    "hash": "01930f331052fb627d27c76c4d46e996",
+    "content-hash": "26109b1e0aa887dbedf31b99788b8408",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -183,17 +183,17 @@
             "time": "2016-08-03 09:33:34"
         },
         {
-            "name": "jclg/php-slack-bot",
+            "name": "optii/php-slack-bot",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jclg/php-slack-bot.git",
-                "reference": "6b187509499daa9f02e40a176762c7018bddd85d"
+                "url": "https://github.com/optii/php-slack-bot.git",
+                "reference": "caec5f41a1d9e8b4f3a2fb555efa94e027a819e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jclg/php-slack-bot/zipball/6b187509499daa9f02e40a176762c7018bddd85d",
-                "reference": "6b187509499daa9f02e40a176762c7018bddd85d",
+                "url": "https://api.github.com/repos/optii/php-slack-bot/zipball/caec5f41a1d9e8b4f3a2fb555efa94e027a819e7",
+                "reference": "caec5f41a1d9e8b4f3a2fb555efa94e027a819e7",
                 "shasum": ""
             },
             "require": {
@@ -211,11 +211,15 @@
                 {
                     "name": "jclg",
                     "email": "jeancharleslegoff@gmail.com"
+                },
+                {
+                    "name": "opti",
+                    "email": "daniel@dancole.fr"
                 }
             ],
-            "description": "Slack bot user written in PHP",
-            "homepage": "https://github.com/jclg/php-slack-bot",
-            "time": "2016-06-07 09:10:20"
+            "description": "Slack bot user written in PHP forked from jclg/php-slack-bot",
+            "homepage": "https://github.com/optii/php-slack-bot",
+            "time": "2016-08-11 11:39:37"
         },
         {
             "name": "psr/http-message",
@@ -731,12 +735,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "8a0eb6488e291cceb82ca16fa0f1a97c052f9913"
+                "reference": "8cd475b4d52aa31ed6205f69a0a72b60ed989a27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/8a0eb6488e291cceb82ca16fa0f1a97c052f9913",
-                "reference": "8a0eb6488e291cceb82ca16fa0f1a97c052f9913",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/8cd475b4d52aa31ed6205f69a0a72b60ed989a27",
+                "reference": "8cd475b4d52aa31ed6205f69a0a72b60ed989a27",
                 "shasum": ""
             },
             "require": {
@@ -773,7 +777,7 @@
                 "http",
                 "zf2"
             ],
-            "time": "2016-08-08 12:44:26"
+            "time": "2016-08-08 15:10:07"
         },
         {
             "name": "zendframework/zend-loader",
@@ -1113,7 +1117,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "jclg/php-slack-bot": 20,
+        "optii/php-slack-bot": 20,
         "rfreebern/giphy-php": 20
     },
     "prefer-stable": false,

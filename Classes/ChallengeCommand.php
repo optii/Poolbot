@@ -30,10 +30,16 @@ class ChallengeCommand extends PoolbotBaseCommand
     private function parseCommand($message)
     {
         $arguments = explode(' ', $message['text']);
-        if(count($arguments) != 2){
+        $argsOffset = 0;
+
+        if (strpos($message['text'], '<@'.$this->getCurrentContext()['self']['id'].'>') === 0) {
+            $argsOffset = 1;
+        }
+
+        if(count($arguments) != 2 + $argsOffset ){
             return false;
         }
 
-        return Pool::parseUser($arguments[1]);
+        return Pool::parseUser($arguments[1+$argsOffset]);
     }
 }

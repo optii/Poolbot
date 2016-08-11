@@ -1,7 +1,7 @@
 {
   "minimum-stability" : "dev",
   "require": {
-    "jclg/php-slack-bot": "dev-master",
+    "optii/php-slack-bot": "dev-master",
     "rfreebern/giphy-php": "dev-master"
   }
 }
