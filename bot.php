@@ -1,6 +1,9 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/optii/glicko2-php/class.Glicko2Player.php';
+require_once __DIR__ . '/Classes/Season.php';
+require_once __DIR__ . '/Classes/Match.php';
 require_once __DIR__ . '/Classes/PoolbotBaseCommand.php';
 require_once __DIR__ . '/Classes/RegisterCommand.php';
 require_once __DIR__ . '/Classes/AcceptCommand.php';

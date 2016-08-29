@@ -238,9 +238,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/optii/glicko2-php.git",
-                "reference": "aa02c51754b6035cc9d4f8360a05aa2c2fd24b36"
+                "reference": "b317852b4c2cd4eb2d0505d205c8a4ac637e9d2b"
             },
             "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "glicko2-php": "class.Glicko2Player.php"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -251,7 +256,7 @@
                 "glicko2",
                 "php"
             ],
-            "time": "2016-08-29 11:03:44"
+            "time": "2016-08-29 13:43:43"
         },
         {
             "name": "optii/php-slack-bot",

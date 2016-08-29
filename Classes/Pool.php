@@ -15,9 +15,6 @@ class Pool
 
     private $seasons = array();
     private $current;
-    private $matchs = array();
-    private $registered = array();
-    private $leaderboard = array();
     private $admins = array();
     private $password;
     private $gif = false;
@@ -25,102 +22,94 @@ class Pool
     public function __construct()
     {
         $this->current = 1;
+        $this->seasons[] = new Season($this->current);
         $this->generatePassword();
     }
 
+    /**
+     * Is registered
+     *
+     * @param $userId
+     * @return bool
+     */
     public function isRegistered($userId)
     {
-        if (in_array($userId, $this->registered)) {
-            return true;
-        }
-        return false;
+        return $this->getCurrentSeason()->isRegistered($userId);
     }
 
-    public function getRegistered()
-    {
-        return $this->registered;
-    }
-
+    /**
+     * Get the current season number
+     *
+     * @return int
+     */
     public function getCurrent()
     {
         return $this->current;
     }
 
+    /**
+     * Set current season
+     *
+     * @param $current
+     * @return $this
+     */
     public function setCurrent($current)
     {
         $this->current = $current;
         return $this;
     }
 
+    /**
+     * Get leader board
+     *
+     * @param bool $season
+     * @return string
+     */
     public function getLeaderboard($season = false)
     {
         if (!$season) {
             $season = $this->current;
         }
 
-        $leaderboard = array();
         $leaderboardText = "";
-        $i =  1;
+        $i = 1;
 
-        foreach ($this->matchs as $v) {
-            if ($v['season'] == $season && $v['winner'] !== null) {
-                    $looser = $v[(($v['winner'] == $v['user1']) ? 'user2' : 'user1' )];
-                    $leaderboard[$v['winner']]['points'] += self::POINT_WIN;
-                    $leaderboard[$looser]['points'] += self::POINT_LOST;
-                    $leaderboard[$v['winner']]['played'] += 1;
-                    $leaderboard[$looser]['played'] += 1;
-            }
-        }
-
-        uasort($leaderboard, function($a, $b){
-            if($a['points'] > $b['points']){
-                return 1;
-            } elseif($a['points'] < $b['points']){
-               return -1;
-            } else {
-                // Equality should compare player names and order accordingly
-                return 0;
-            }
-        });
-
-        foreach ($leaderboard as $key => $value) {
-            $leaderboardText .= $i . ". <@" . $key . "> - " . $value['points'] . "pts (".$value['played'].")\n";
+        foreach ($this->getSeason($season)->getLeaderboard() as $key => $value) {
+            $leaderboardText .= $i . ". <@" . $this->getSeason($season)->getUserIdFromObject($value) . "> - " . $value->rating . "pts (" . ($value->losses + $value->wins) . ")\n";
             $i++;
         }
         return $leaderboardText;
     }
 
+    /**
+     * List current on going matches
+     *
+     * @return string
+     */
     public function getCurrentMatches()
     {
         $matches = "Current matches:\n";
-        $ongoingMatches = false;
-        foreach ($this->matchs as $k => $v) {
-            if ($v['season'] == $this->current) {
-                if ($v['accepted'] == false || $v['winner'] == null) {
-                    $ongoingMatches = true;
-                    $matches .= "<@" . $v['user1'] . "> vs <@" . $v['user2'] . "> - " . ((!$v['accepted']) ? "Not accepted" : "Pending result") . "\n";
-                }
-            }
+        $matchesArray = $this->getCurrentSeason()->getCurrentMatches();
+        foreach ($matchesArray as $match) {
+            $matches .= "<@" . $this->getCurrentSeason()->getUserIdFromObject($match->getUser1()) . "> vs <@" . $this->getCurrentSeason()->getUserIdFromObject($match->getUser2()) . "> - " . ((!$match->isAccepted()) ? "Not accepted" : "Pending result") . "\n";
+
         }
-        if (!$ongoingMatches) {
+
+        if (count($matchesArray) == 0) {
             return "No matches";
         }
         return $matches;
     }
 
+    /**
+     * Has Challenge
+     *
+     * @param $user
+     * @return bool
+     */
     public function hasChallenge($user)
     {
-        foreach ($this->matchs as $k => $v) {
-            if ($v['season'] == $this->getCurrent()) {
-                if ($v['user1'] == $user || $v['user2'] == $user) {
-                    if ($v['accepted'] == false || $v['winner'] == null) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
+        return $this->getCurrentSeason()->hasChallenge($this->getCurrentSeason()->getUser($user));
     }
 
     /**
@@ -131,11 +120,7 @@ class Pool
      */
     protected function register($userId)
     {
-        if (!$this->isRegistered($userId)) {
-            $this->registered[] = $userId;
-            return true;
-        }
-        return false;
+        return $this->getCurrentSeason()->registerUser($userId);
     }
 
     /**
@@ -147,18 +132,18 @@ class Pool
      */
     protected function challenge($user1, $user2)
     {
-        if(!$this->isRegistered($user2)){
+        if (!$this->getCurrentSeason()->isRegistered($user2)) {
             return 'The user you are trying to challenge is not registered';
         }
 
-        if(!$this->isRegistered($user1)){
+        if (!$this->getCurrentSeason()->isRegistered($user1)) {
             return 'You must be registered to challenge someone';
         }
 
-        $chal1 = $this->hasChallenge($user1);
-        $chal2 = $this->hasChallenge($user2);
+        $chal1 = $this->getCurrentSeason()->hasChallenge($this->getCurrentSeason()->getUser($user1));
+        $chal2 = $this->getCurrentSeason()->hasChallenge($this->getCurrentSeason()->getUser($user2));
         if (!$chal1 && !$chal2) {
-            $this->matchs[] = array('user1' => $user1, 'user2' => $user2, 'accepted' => false, 'winner' => null, 'season' => $this->current);
+            $this->getCurrentSeason()->addMatch(new Match($this->getCurrentSeason()->getUser($user1), $this->getCurrentSeason()->getUser($user2)));
             return true;
         }
 
@@ -177,15 +162,7 @@ class Pool
      */
     protected function accept($user2)
     {
-        foreach ($this->matchs as $k => $v) {
-            if ($v['season'] == $this->current) {
-                if ($v['user2'] == $user2 && $v['accepted'] == false) {
-                    $this->matchs[$k]['accepted'] = true;
-                    return true;
-                }
-            }
-        }
-        return false;
+        return $this->getCurrentSeason()->acceptMatch($this->getCurrentSeason()->getUser($user2));
     }
 
     /**
@@ -195,26 +172,7 @@ class Pool
      */
     protected function lost($user)
     {
-        foreach ($this->matchs as $k => $v) {
-            if ($v['season'] == $this->current) {
-                if ($v['user2'] == $user && $v['winner'] === null) {
-                    $this->matchs[$k]['accepted'] = true;
-                    $this->matchs[$k]['winner'] = $v['user1'];
-                    $this->leaderboard[$this->current][$v['user1']] += self::POINT_WIN;
-                    $this->leaderboard[$this->current][$v['user2']] += self::POINT_LOST;
-                    return true;
-                }
-
-                if ($v['user1'] == $user && $v['winner'] === null) {
-                    $this->matchs[$k]['accepted'] = true;
-                    $this->matchs[$k]['winner'] = $v['user2'];
-                    $this->leaderboard[$this->current][$v['user2']] += self::POINT_WIN;
-                    $this->leaderboard[$this->current][$v['user1']] += self::POINT_LOST;
-                    return true;
-                }
-            }
-        }
-        return false;
+        return $this->getCurrentSeason()->lostMatch($this->getCurrentSeason()->getUser($user));
     }
 
     /**
@@ -224,18 +182,9 @@ class Pool
      */
     protected function cancel($user)
     {
-        $cancelled = false;
-        foreach ($this->matchs as $k => $v) {
-            if ($v['season'] == $this->getCurrent()) {
-                if (($v['user1'] == $user || $v['user2'] == $user) && ($v['accepted'] == false || $v['winner'] == null)) {
-                    unset($this->matchs[$k]);
-                    $cancelled = true;
-                }
-            }
-        }
-
-        return $cancelled;
+        return $this->getCurrentSeason()->cancelMatchForUser($this->getCurrentSeason()->getUser($user));
     }
+
 
     /**
      * Toggles the GIF system on and off
@@ -270,6 +219,107 @@ class Pool
         return $this;
     }
 
+
+    /**
+     * Creates a new season
+     *
+     * @return bool
+     */
+    public function newSeason()
+    {
+        $this->seasons[] = new Season(++$this->current);
+        $this->save();
+        return true;
+    }
+
+    /**
+     * Get all seasons
+     *
+     * @return array
+     */
+    public function getSeasons()
+    {
+        return $this->seasons;
+    }
+
+    /**
+     * Get Current Season
+     *
+     * @return Season
+     */
+    public function getCurrentSeason()
+    {
+        return $this->getSeason($this->getCurrent());
+    }
+
+    /**
+     * Get a season by its number
+     *
+     * @param $number
+     * @return Season
+     */
+    public function getSeason($number){
+        foreach($this->getSeasons() as $season){
+            if($season->getNumber() == $number){
+                return $season;
+            }
+        }
+    }
+
+    /**
+     * Is admin
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAdmin($user)
+    {
+        return in_array($user, $this->admins);
+    }
+
+    /**
+     * Get a list of admins
+     *
+     * @return array
+     */
+    public function getAdmins()
+    {
+        return $this->admins;
+    }
+
+    /**
+     * Add an admin to the bot
+     *
+     * @param $user
+     * @param $password
+     * @return bool|string
+     */
+    public function addAdmin($user, $password)
+    {
+        if ($this->password == $password) {
+            if (!$this->isAdmin($user)) {
+                $this->admins[] = $user;
+                $this->save();
+                return true;
+            } else {
+                return "User is already an admin";
+            }
+        } else {
+            return "Incorrect admin password";
+        }
+    }
+
+    /**
+     * Parse a slack user string
+     *
+     * @param $string
+     * @return mixed
+     */
+    static function parseUser($string)
+    {
+        return preg_replace("/<@(.+)>/", "$1", trim($string));
+    }
+
     /**
      * Generates a random string to use as the password
      *
@@ -290,66 +340,36 @@ class Pool
     }
 
     /**
-     * Creates a new season
+     * Get the save path
      *
-     * @return bool
+     * @return string
      */
-    public function newSeason()
+    static function getSavePath()
     {
-        $this->current++;
-        $this->seasons[] = $this->current;
-        $this->save();
-        return true;
+        return __DIR__ . self::SAVE_PATH;
     }
 
-
-    public function isAdmin($user)
-    {
-        return in_array($user, $this->admins);
-    }
-
-    public function getAdmins()
-    {
-        return $this->admins;
-    }
-
-    public function addAdmin($user, $password)
-    {
-        if ($this->password == $password) {
-            if (!$this->isAdmin($user)) {
-                $this->admins[] = $user;
-                $this->save();
-                return true;
-            } else {
-                return "User is already an admin";
-            }
-        } else {
-            return "Incorrect admin password";
-        }
-    }
-
-    static function parseUser($string)
-    {
-        return preg_replace("/<@(.+)>/", "$1", trim($string));
-    }
-
-    static function getSavePath(){
-        return __DIR__.self::SAVE_PATH;
-    }
-
+    /**
+     * Saves the pool instance to file
+     */
     private function save()
     {
-        if(!is_dir(self::getSavePath())){
+        if (!is_dir(self::getSavePath())) {
             mkdir(self::getSavePath());
         }
         $serialized = serialize($this);
-        file_put_contents(self::getSavePath().self::SAVE_FILENAME, $serialized);
+        file_put_contents(self::getSavePath() . self::SAVE_FILENAME, $serialized);
     }
 
+    /**
+     * Creates the pool instance from a save file
+     *
+     * @return mixed|Pool
+     */
     static function create()
     {
-        if (file_exists(self::getSavePath().self::SAVE_FILENAME)) {
-            $serialized = file_get_contents(self::getSavePath().self::SAVE_FILENAME);
+        if (file_exists(self::getSavePath() . self::SAVE_FILENAME)) {
+            $serialized = file_get_contents(self::getSavePath() . self::SAVE_FILENAME);
             $object = unserialize($serialized);
             $object->generatePassword();
             return $object;
