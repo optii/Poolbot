@@ -10,7 +10,7 @@ class Pool
 {
     const POINT_WIN = 3;
     const POINT_LOST = -3;
-    const SAVE_PATH = __DIR__ . '/../save/';
+    const SAVE_PATH = '/../save/';
     const SAVE_FILENAME = "pool.save";
 
     private $seasons = array();
@@ -58,15 +58,34 @@ class Pool
             $season = $this->current;
         }
 
+        $leaderboard = array();
         $leaderboardText = "";
-        if (array_key_exists($this->getCurrent(), $this->leaderboard)) {
-            asort($this->leaderboard[$season], SORT_NUMERIC);
-            $this->leaderboard[$season] = array_reverse($this->leaderboard[$season]);
-            $i = 1;
-            foreach ($this->leaderboard[$season] as $k => $v) {
-                $leaderboardText .= $i . ". <@" . $k . "> - " . $v . "pts\n";
-                $i++;
+        $i =  1;
+
+        foreach ($this->matchs as $v) {
+            if ($v['season'] == $season && $v['winner'] !== null) {
+                    $looser = $v[(($v['winner'] == $v['user1']) ? 'user2' : 'user1' )];
+                    $leaderboard[$v['winner']]['points'] += self::POINT_WIN;
+                    $leaderboard[$looser]['points'] += self::POINT_LOST;
+                    $leaderboard[$v['winner']]['played'] += 1;
+                    $leaderboard[$looser]['played'] += 1;
             }
+        }
+
+        uasort($leaderboard, function($a, $b){
+            if($a['points'] > $b['points']){
+                return 1;
+            } elseif($a['points'] < $b['points']){
+               return -1;
+            } else {
+                // Equality should compare player names and order accordingly
+                return 0;
+            }
+        });
+
+        foreach ($leaderboard as $key => $value) {
+            $leaderboardText .= $i . ". <@" . $key . "> - " . $value['points'] . "pts (".$value['played'].")\n";
+            $i++;
         }
         return $leaderboardText;
     }
@@ -314,19 +333,23 @@ class Pool
         return preg_replace("/<@(.+)>/", "$1", trim($string));
     }
 
+    static function getSavePath(){
+        return __DIR__.self::SAVE_PATH;
+    }
+
     private function save()
     {
-        if(!is_dir(self::SAVE_PATH)){
-            mkdir(self::SAVE_PATH);
+        if(!is_dir(self::getSavePath())){
+            mkdir(self::getSavePath());
         }
         $serialized = serialize($this);
-        file_put_contents(self::SAVE_PATH.self::SAVE_FILENAME, $serialized);
+        file_put_contents(self::getSavePath().self::SAVE_FILENAME, $serialized);
     }
 
     static function create()
     {
-        if (file_exists(self::SAVE_PATH.self::SAVE_FILENAME)) {
-            $serialized = file_get_contents(self::SAVE_PATH.self::SAVE_FILENAME);
+        if (file_exists(self::getSavePath().self::SAVE_FILENAME)) {
+            $serialized = file_get_contents(self::getSavePath().self::SAVE_FILENAME);
             $object = unserialize($serialized);
             $object->generatePassword();
             return $object;

@@ -1,7 +1,16 @@
 {
   "minimum-stability" : "dev",
+  "repositories": [
+    {
+      "url": "https://github.com/optii/glicko2-php.git",
+      "type": "git"
+    }
+  ],
   "require": {
     "optii/php-slack-bot": "dev-master",
-    "rfreebern/giphy-php": "dev-master"
+    "optii/glicko2-php": "dev-master",
+    "rfreebern/giphy-php": "dev-master",
+    "psr/log": "1.0.0",
+    "katzgrau/klogger": "^1.2"
   }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Dan
@@ -7,12 +8,15 @@
  */
 class RegisterCommand extends PoolbotBaseCommand
 {
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('register');
     }
 
-    protected function execute($message, $context) {
-        if($this->pool->register($this->getCurrentUser())){
+    protected function execute($message, $context)
+    {
+        $this->logger->info('Command ' . get_class(), $message);
+        if ($this->pool->register($this->getCurrentUser())) {
             $this->send($this->getCurrentChannel(), null, 'You are now registered');
         } else {
             $this->send($this->getCurrentChannel(), null, 'You are already registered to play');

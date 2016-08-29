@@ -12,6 +12,7 @@ class MatchesCommand extends PoolbotBaseCommand
     }
 
     protected function execute($message, $context) {
+        $this->logger->info('Command '.get_class(), $message);
         $this->send($this->getCurrentChannel(), null, $this->pool->getCurrentMatches());
     }
 

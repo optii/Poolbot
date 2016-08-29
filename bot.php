@@ -18,20 +18,22 @@ require_once __DIR__ . '/Classes/Pool.php';
 
 use PhpSlackBot\Bot;
 
-
+$config = parse_ini_file(__DIR__ . '/Config/config.ini');
+$logger = new Katzgrau\KLogger\Logger(__DIR__.'/logs');
+$logger->info('Poolbot starting');
 $bot = new Bot();
 $pool = Pool::create();
-$bot->setToken('xoxb-5azef6546429041-qTnojioijieCpokpopkqa7'); // Get your token here https://my.slack.com/services/new/bot
-$bot->loadCommand(new RegisterCommand($pool));
-$bot->loadCommand(new LeaderboardCommand($pool));
-$bot->loadCommand(new ChallengeCommand($pool));
-$bot->loadCommand(new AddAdminCommand($pool));
-$bot->loadCommand(new LostCommand($pool));
-$bot->loadCommand(new CancelCommand($pool));
-$bot->loadCommand(new SeasonCommand($pool));
-$bot->loadCommand(new PreviousSeasonLeaderboardCommand($pool));
-$bot->loadCommand(new MatchesCommand($pool));
-$bot->loadCommand(new GifCommand($pool));
+$bot->setToken($config['token']); // Get your token here https://my.slack.com/services/new/bot
+$bot->loadCommand(new RegisterCommand($pool, $logger));
+$bot->loadCommand(new LeaderboardCommand($pool, $logger));
+$bot->loadCommand(new ChallengeCommand($pool, $logger));
+$bot->loadCommand(new AddAdminCommand($pool, $logger));
+$bot->loadCommand(new LostCommand($pool, $logger));
+$bot->loadCommand(new CancelCommand($pool, $logger));
+$bot->loadCommand(new SeasonCommand($pool, $logger));
+$bot->loadCommand(new PreviousSeasonLeaderboardCommand($pool, $logger));
+$bot->loadCommand(new MatchesCommand($pool, $logger));
+$bot->loadCommand(new GifCommand($pool, $logger));
 $bot->loadCommand(new HelpCommand());
-$bot->loadCommand(new AcceptCommand($pool));
+$bot->loadCommand(new AcceptCommand($pool, $logger));
 $bot->run();

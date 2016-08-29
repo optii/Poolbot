@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Dan
@@ -7,11 +8,14 @@
  */
 class LeaderboardCommand extends PoolbotBaseCommand
 {
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('leaderboard');
     }
 
-    protected function execute($message, $context) {
+    protected function execute($message, $context)
+    {
+        $this->logger->info('Command ' . get_class(), $message);
         $this->send($this->getCurrentChannel(), null, $this->pool->getLeaderboard(), "leader");
     }
 

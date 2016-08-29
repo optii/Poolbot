@@ -12,6 +12,7 @@ class AddAdminCommand extends PoolbotBaseCommand
     }
 
     protected function execute($message, $context) {
+        $this->logger->info('Command '.get_class(), $message);
        if($this->pool->isRegistered($this->getCurrentUser())){
            $res = $this->pool->addAdmin($this->getCurrentUser(), $this->parseCommand($message));
            if($res === true){

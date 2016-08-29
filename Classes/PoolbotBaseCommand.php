@@ -4,11 +4,13 @@ use \rfreebern\Giphy;
 
 abstract class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand
 {
-  protected $pool;
+    protected $pool;
+    protected $logger;
 
-  public function __construct(Pool $pool)
+  public function __construct(Pool $pool, \Katzgrau\KLogger\Logger $logger)
   {
       $this->pool = $pool;
+      $this->logger = $logger;
   }
 
   protected function send($channel, $username, $message, $tag = null){

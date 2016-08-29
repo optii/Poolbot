@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01930f331052fb627d27c76c4d46e996",
-    "content-hash": "26109b1e0aa887dbedf31b99788b8408",
+    "hash": "b70f95caca346d63c0aea2c07254b739",
+    "content-hash": "9008e505a48e44502ac850c4f9fdfd8f",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -183,6 +183,77 @@
             "time": "2016-08-03 09:33:34"
         },
         {
+            "name": "katzgrau/klogger",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/katzgrau/KLogger.git",
+                "reference": "87735262be7c3bd210740b5cd4831dee3d827c46"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/katzgrau/KLogger/zipball/87735262be7c3bd210740b5cd4831dee3d827c46",
+                "reference": "87735262be7c3bd210740b5cd4831dee3d827c46",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "psr/log": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Katzgrau\\KLogger\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kenny Katzgrau",
+                    "email": "katzgrau@gmail.com"
+                },
+                {
+                    "name": "Dan Horrigan",
+                    "email": "dan@dhorrigan.com"
+                }
+            ],
+            "description": "A Simple Logging Class",
+            "keywords": [
+                "logging"
+            ],
+            "time": "2015-11-04 22:43:22"
+        },
+        {
+            "name": "optii/glicko2-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/optii/glicko2-php.git",
+                "reference": "aa02c51754b6035cc9d4f8360a05aa2c2fd24b36"
+            },
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "description": "Glicko 2 implementation in PHP!",
+            "homepage": "https://github.com/optii/glicko2-php",
+            "keywords": [
+                "awesome",
+                "glicko2",
+                "php"
+            ],
+            "time": "2016-08-29 11:03:44"
+        },
+        {
             "name": "optii/php-slack-bot",
             "version": "dev-master",
             "source": {
@@ -273,30 +344,22 @@
         },
         {
             "name": "psr/log",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e"
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d8e60a5619fff77f9669da8997697443ef1a1d7e",
-                "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
                 "shasum": ""
             },
-            "require": {
-                "php": ">=5.3.0"
-            },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
-                "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                "psr-0": {
+                    "Psr\\Log\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -310,13 +373,12 @@
                 }
             ],
             "description": "Common interface for logging libraries",
-            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-01-06 21:40:42"
+            "time": "2012-12-21 11:40:51"
         },
         {
             "name": "react/cache",
@@ -439,12 +501,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/http.git",
-                "reference": "cd15204bd15d106d7832c680e4fb0ca0ce2f5e30"
+                "reference": "ef71d4919f945a60119aa399a42c108304be6883"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/http/zipball/cd15204bd15d106d7832c680e4fb0ca0ce2f5e30",
-                "reference": "cd15204bd15d106d7832c680e4fb0ca0ce2f5e30",
+                "url": "https://api.github.com/repos/reactphp/http/zipball/ef71d4919f945a60119aa399a42c108304be6883",
+                "reference": "ef71d4919f945a60119aa399a42c108304be6883",
                 "shasum": ""
             },
             "require": {
@@ -468,7 +530,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2016-07-06 23:51:32"
+            "time": "2016-08-20 11:40:06"
         },
         {
             "name": "react/promise",
@@ -599,16 +661,16 @@
         },
         {
             "name": "react/stream",
-            "version": "v0.4.3",
+            "version": "v0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/stream.git",
-                "reference": "305b2328d2a2e157bc13b61a0f5c6e41b666b188"
+                "reference": "fcc9e7cea126962cff303c90c05e2efdcec09a27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/stream/zipball/305b2328d2a2e157bc13b61a0f5c6e41b666b188",
-                "reference": "305b2328d2a2e157bc13b61a0f5c6e41b666b188",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/fcc9e7cea126962cff303c90c05e2efdcec09a27",
+                "reference": "fcc9e7cea126962cff303c90c05e2efdcec09a27",
                 "shasum": ""
             },
             "require": {
@@ -616,6 +678,7 @@
                 "php": ">=5.3.8"
             },
             "require-dev": {
+                "clue/stream-filter": "~1.2",
                 "react/event-loop": "^0.4|^0.3",
                 "react/promise": "^2.0|^1.0"
             },
@@ -624,11 +687,6 @@
                 "react/promise": "^2.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.5-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "React\\Stream\\": "src"
@@ -643,7 +701,7 @@
                 "pipe",
                 "stream"
             ],
-            "time": "2015-10-07 18:32:58"
+            "time": "2016-08-22 09:51:07"
         },
         {
             "name": "rfreebern/giphy-php",
@@ -825,26 +883,23 @@
         },
         {
             "name": "zendframework/zend-log",
-            "version": "dev-develop",
+            "version": "2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-log.git",
-                "reference": "3bf8d0f6012b9e76593b78ecff05ae711757abec"
+                "reference": "78712a83261739f0c7bc5718c8cb9514b58e6a0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-log/zipball/3bf8d0f6012b9e76593b78ecff05ae711757abec",
-                "reference": "3bf8d0f6012b9e76593b78ecff05ae711757abec",
+                "url": "https://api.github.com/repos/zendframework/zend-log/zipball/78712a83261739f0c7bc5718c8cb9514b58e6a0d",
+                "reference": "78712a83261739f0c7bc5718c8cb9514b58e6a0d",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0",
+                "php": "^5.5 || ^7.0",
                 "psr/log": "^1.0",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
                 "zendframework/zend-stdlib": "^2.7 || ^3.0"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0.0"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
@@ -858,7 +913,7 @@
                 "zendframework/zend-validator": "^2.6"
             },
             "suggest": {
-                "ext-mongodb": "mongodb extension to use MongoDB writer",
+                "ext-mongo": "mongodb extension to use MongoDB writer",
                 "zendframework/zend-console": "Zend\\Console component to use the RequestID log processor",
                 "zendframework/zend-db": "Zend\\Db component to use the database log writer",
                 "zendframework/zend-escaper": "Zend\\Escaper component, for use in the XML log formatter",
@@ -868,8 +923,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9-dev",
-                    "dev-develop": "2.10-dev"
+                    "dev-master": "2.8-dev",
+                    "dev-develop": "2.9-dev"
                 },
                 "zf": {
                     "component": "Zend\\Log",
@@ -892,7 +947,7 @@
                 "logging",
                 "zf2"
             ],
-            "time": "2016-06-22 22:26:41"
+            "time": "2016-05-25 12:20:07"
         },
         {
             "name": "zendframework/zend-servicemanager",
@@ -1118,6 +1173,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "optii/php-slack-bot": 20,
+        "optii/glicko2-php": 20,
         "rfreebern/giphy-php": 20
     },
     "prefer-stable": false,
