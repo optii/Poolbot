@@ -16,8 +16,10 @@ abstract class PoolbotBaseCommand extends \PhpSlackBot\Command\BaseCommand
   protected function send($channel, $username, $message, $tag = null){
      if($this->pool->isGif()){
        $giphy = new \rfreebern\Giphy('dc6zaTOxFJmzC');
-       $result = $giphy->trending(1);
-       $message .= "\n ".$result->data->image_original_url;
+       $results = $giphy->trending(100);
+       $gif = $results[array_rand($results->data)];
+
+       $message .= "\n ".$gif->images->original;
      }
 
      parent::send($channel, $username, $message);
