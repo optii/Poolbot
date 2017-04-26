@@ -84,7 +84,7 @@ class Pool
         });
 
         foreach ($leaderboard as $key => $value) {
-            $leaderboardText .= $i . ". <@" . $key . "> - " . $value['points'] . "pts (".$value['played'].")\n";
+            $leaderboardText .= $i . ". <@" . $key . "> : " . $value['points'] . "pts (".$value['played'].")\n";
             $i++;
         }
         return $leaderboardText;
