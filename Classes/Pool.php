@@ -82,6 +82,8 @@ class Pool
                 return 0;
             }
         });
+        
+        $leaderboard = array_reverse($leaderboard);
 
         foreach ($leaderboard as $key => $value) {
             $leaderboardText .= $i . ". <@" . $key . "> : " . $value['points'] . "pts (".$value['played'].")\n";
